@@ -3,43 +3,14 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
-  workflow_call:
-    inputs:
-      settings:
-        required: false
-        default: "publishconf.py"
-        description: "The path to your Pelican settings file (`pelican`'s `--settings` option), for example: 'publishconf.py'"
-        type: string
-      requirements:
-        required: false
-        default: "pelican[markdown] typogrify pelican-markdown-include pelican-render-math"
-        description: "The Python requirements to install, for example to enable markdown and typogrify use: 'pelican[markdown] typogrify' or if you have a requirements file use: '-r requirements.txt'"
-        type: string
-      output-path:
-        required: false
-        default: "output/"
-        description: "Where to output the generated files (`pelican`'s `--output` option)"
-        type: string
-      theme:
-        required: false
-        default: ""
-        description: "The GitHub repo URL of a custom theme to use, for example: 'https://github.com/seanh/sidecar.git'"
-        type: string
-      python:
-        required: false
-        default: "3.12"
-        description: "The version of Python to use, for example: '3.12' (to use the most recent version of Python 3.12, this is faster) or '3.12.1' (to use an exact version, slower)"
-        type: string
-      siteurl:
-        required: false
-        default: "https://cl66y.github.io"
-        description: "The base URL of your web site (Pelican's SITEURL setting). If not passed this will default to the URL of your GitHub Pages site, which is correct in most cases."
-        type: string
-      feed_domain:
-        required: false
-        default: "https://cl66y.github.io"
-        description: "The domain to be prepended to feed URLs (Pelican's FEED_DOMAIN setting). If not passed this will default to the URL of your GitHub Pages site, which is correct in most cases."
-        type: string
+
+env:
+  SETTINGS: "publishconf.py"
+  REQUIREMENTS: "pelican[markdown] typogrify pelican-markdown-include pelican-render-math"
+  OUTPUT_PATH: "output/"
+  PYTHON: "3.12"
+  SITEURL: "https://cl66y.github.io"
+  FEED_DOMAIN: "https://cl66y.github.io"
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -56,41 +27,35 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ inputs.python }}
-      - name: Checkout theme
-        if: ${{ inputs.theme }}
-        run: git clone '${{ inputs.theme }}' .theme
+          python-version: ${{ env.PYTHON }}
       - name: Install requirements
-        run: pip install ${{ inputs.requirements }}
+        run: pip install ${{ env.REQUIREMENTS }}
       - name: Build Pelican site
         shell: python
         run: |
           import subprocess
 
           cmd = "pelican"
-          cmd += " --settings ${{ inputs.settings }}"
+          cmd += " --settings ${{ env.SETTINGS }}"
           cmd += " --extra-settings"
-          cmd += """ SITEURL='"${{ inputs.siteurl }}"'"""
-          cmd += """ FEED_DOMAIN='"${{ inputs.feed_domain }}"'"""
-          cmd += " --output ${{ inputs.output-path }}"
-
-          if "${{ inputs.theme }}":
-              cmd += " --theme-path .theme"
+          cmd += """ SITEURL='"${{ env.SITEURL }}"'"""
+          cmd += """ FEED_DOMAIN='"${{ env.FEED_DOMAIN }}"'"""
+          cmd += " --output ${{ env.OUTPUT_PATH }}"
 
           subprocess.run(cmd, shell=True, check=True)
       - name: Fix permissions
         run: |
-          chmod -c -R +rX "${{ inputs.output-path }}" | while read line; do
+          chmod -c -R +rX "${{ env.OUTPUT_PATH }}" | while read line; do
             echo "::warning title=Invalid file permissions automatically fixed::$line"
           done
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ inputs.output-path }}
+          path: ${{ env.OUTPUT_PATH }}
   deploy:
     environment:
       name: github-pages
-      url: ${{ inputs.siteurl }}
+      url: ${{ env.SITEURL }}
     runs-on: ubuntu-latest
     needs: build
     steps:

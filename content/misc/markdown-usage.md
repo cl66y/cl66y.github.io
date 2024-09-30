@@ -4,6 +4,7 @@ Modified: 2022-05-05 15:17:53
 Category: Misc
 Tags: markdown
 Slug: markdown-usage
+Figure: pelican.svg
 
 ## 代码
 ### C++ 代码

@@ -59,7 +59,8 @@
                 admin: "{{ GITALK_REPO_ADMIN }}".split(','),
                 id: "{{article.category}}/{{ article.slug }}",
                 title: '{{ article.title }}',
-                distractionFreeMode: true  // Facebook-like distraction free mode
+                distractionFreeMode: false,  // Facebook-like distraction free mode
+                createIssueManually: true
             });
             gitalk.render('gitalk-container');
         </script>

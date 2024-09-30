@@ -111,7 +111,7 @@ SITE_LINKS = [
 # site banner
 SHOW_SITE_BANNER_IN = ['all']
 SITE_BANNER_ELEMENTS = ['logo', 'name', 'social']
-SITE_BANNER_BACKGROUND_COLOR = "#eeeeec; background-image: url('/images/background_banner.png'); background-position: center top;"
+SITE_BANNER_BACKGROUND_COLOR = "#eeeeec; background-image: url('/images/background_banner.png'); background-repeat: no-repeat; background-size: cover; background-position: center center"
 SITELOGO = "images/logo.png"
 
 # sidebar

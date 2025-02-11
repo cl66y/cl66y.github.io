@@ -1,6 +1,6 @@
 AUTHOR = 'Grass'
 SITENAME = 'CAOLIU'
-SITEURL = "https://cl66y.github.io"
+SITEURL = "https://cao-liu.net"
 ORGNIZATION = "CAOLIU"
 
 PATH = "content"

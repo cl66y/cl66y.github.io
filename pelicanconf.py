@@ -1,6 +1,6 @@
 AUTHOR = 'Grass'
 SITENAME = 'CAOLIU'
-SITEURL = "https://cao-liu.net"
+SITEURL = "https://cl66y.github.io"
 ORGNIZATION = "CAOLIU"
 
 PATH = "content"
@@ -138,7 +138,7 @@ STATIC_PATHS = [
 EXTRA_PATH_METADATA = {
     'extra/favicon.png': {'path': 'favicon.png'},
     'extra/favicon.ico': {'path': 'favicon.ico'},
-    'extra/CNAME': {'path': 'CNAME'},
+    # 'extra/CNAME': {'path': 'CNAME'},
 }
 
 GITALK_REPO_NAME = "gitalk_comments"

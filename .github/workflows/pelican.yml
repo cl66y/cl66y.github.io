@@ -9,8 +9,8 @@ env:
   REQUIREMENTS: "pelican[markdown] typogrify pelican-markdown-include pelican-render-math"
   OUTPUT_PATH: "output/"
   PYTHON: "3.12"
-  SITEURL: "https://cao-liu.net"
-  FEED_DOMAIN: "https://cao-liu.net"
+  SITEURL: "https://cl66y.github.io"
+  FEED_DOMAIN: "https://cl66y.github.io"
   GITALK_CLIENT_ID: "${{ secrets.GITALK_CLIENT_ID }}"
   GITALK_CLIENT_SECRET: "${{ secrets.GITALK_CLIENT_SECRET }}"
 concurrency:
